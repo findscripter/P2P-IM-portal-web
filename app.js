@@ -41,6 +41,8 @@ const state = {
 // WebRTC ICE config(STUN + 我们自建 TURN)
 const ICE_CONFIG = {
     iceServers: [
+        // 项目自有 STUN(国内可达)— 列在 Google STUN 之前,确保移动网络也能拿到 srflx
+        { urls: 'stun:185.115.207.219:3478' },
         { urls: 'stun:stun.l.google.com:19302' },
         {
             urls: 'turn:185.115.207.219:3478',
