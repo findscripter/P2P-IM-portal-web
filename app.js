@@ -2038,7 +2038,9 @@ function showIncomingCall({ sdp, isVideo, peerName, peerContactId, fromUserId })
     state.call.isCaller = false;
     state.call.peerName = peerName;
     state.call.peerContactId = peerContactId;
-    state.call.pendingIce = [];
+    // 注意:不要重置 pendingIce —— 跨 Portal HTTP 转发不保序,
+    // ICE 可能比 invite 先到,提前缓冲的候选必须保留。
+    if (!Array.isArray(state.call.pendingIce)) state.call.pendingIce = [];
 
     $('incoming-name-initial').textContent = (peerName[0] || '?').toUpperCase();
     $('incoming-name').textContent = peerName;
